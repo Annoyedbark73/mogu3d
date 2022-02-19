@@ -6,6 +6,7 @@ public class PlayerLook : MonoBehaviour
 
 
 {
+    public GameObject real;
     public float maxUp = -90f;
     public float maxDown = 45f;
     public float mouseSensitivity = 100f;
@@ -17,8 +18,16 @@ public class PlayerLook : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        //temporary code for ragdoll
+
+        var script = real.GetComponent<PlayerLook>();
+        script.enabled = true;
+
         Cursor.lockState = CursorLockMode.Locked;
     }
+
+ 
 
     // Update is called once per frame
     void Update()
@@ -32,6 +41,13 @@ public class PlayerLook : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         Player.Rotate(Vector3.up * mouseX);
+
+        //temporary code for ragdoll
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            var script = real.GetComponent<PlayerLook>();
+            script.enabled = false;
+        }
 
 
     }

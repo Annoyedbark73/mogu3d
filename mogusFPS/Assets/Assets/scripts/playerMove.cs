@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class playerMove : MonoBehaviour
 {
-
+    public GameObject Player;
     public CharacterController controller;
 
     public float moveSpeed = 8f;
@@ -22,6 +22,12 @@ public class playerMove : MonoBehaviour
 
     Vector3 velocity;
 
+    private void Awake()
+    {
+        var script = Player.GetComponent<playerMove>();
+        script.enabled = true;
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -33,9 +39,9 @@ public class playerMove : MonoBehaviour
         if(isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
+            
         }
-
-
+       
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
@@ -48,48 +54,22 @@ public class playerMove : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
         }
 
-        //big mess for temp animation
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            animator.SetFloat("Horizontal" , 1f);
-        }
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            animator.SetFloat("Horizontal", 0f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            animator.SetFloat("Horizontal", 1f);
-        }
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            animator.SetFloat("Horizontal", 0f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            animator.SetFloat("Horizontal", 1f);
-        }
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            animator.SetFloat("Horizontal", 0f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            animator.SetFloat("Horizontal", 1f);
-        }
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            animator.SetFloat("Horizontal", 0f);
-        }
+       
 
 
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+        //temporary code for ragdoll
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+           var script = Player.GetComponent<playerMove>();
+            script.enabled = false;
+        }
     }
+
+  
 
     private void OnTriggerEnter(Collider bounds)
     {
