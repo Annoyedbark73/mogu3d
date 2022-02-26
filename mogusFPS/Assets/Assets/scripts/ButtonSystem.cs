@@ -17,6 +17,17 @@ public class ButtonSystem : MonoBehaviour
         SceneManager.LoadSceneAsync("testmap");
         Debug.Log("testmap loaded");
     }
+
+    public void EnterSettings()
+    {
+        SceneManager.LoadSceneAsync("Settings");
+    }
+
+    public void ExitSettings()
+    {
+        SceneManager.LoadSceneAsync("title");
+        Debug.Log("Title Screen");
+    }
    
 
     // Update is called once per frame
